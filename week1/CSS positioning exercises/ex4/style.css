@@ -1,0 +1,28 @@
+.container {
+    background-color: black;
+    width: 400px;
+    height: 200px;
+    padding: 2px;
+    
+}
+
+.red-sep {
+    height: 3px;
+    background-color: darkred;
+    margin-top: -3px;
+    border: 1px solid black;
+
+
+}
+
+.bottom-part {
+    
+}
+
+.brown-box {
+    display: inline-block;
+    background-color: #66320E ;
+    width: 95px;
+    height: 95px;
+    border: 1px solid black;
+}
