@@ -1,0 +1,22 @@
+.blueBox {
+    width: 200px;
+    height: 200px;
+    background-color: blue;
+}
+
+#horisontal {
+    width: 200px;
+    height: 5px;
+    background-color: red;
+    position: absolute;
+    top: 25px;
+}
+
+#vertical {
+    width: 5px;
+    height: 100%;
+    background-color: red;
+    position: relative;
+    left: 25px;
+    top: 0px;
+}
