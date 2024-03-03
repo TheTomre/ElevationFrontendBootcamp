@@ -1,0 +1,103 @@
+.nav-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.nav-container .nav-left ul {
+    list-style-type: none;
+    display: flex;
+    margin: auto;
+    gap: 10px;
+
+}
+
+.inner-left input {
+    border-radius: 100px;
+}
+
+.nav-right {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 10px;
+}
+
+.inner-right {
+    display: flex;
+    gap: 10px;
+}
+
+.inner-right button {
+    border-radius: 100px;
+    background-color: cornflowerblue;
+}
+
+.inner-right img {
+    border-radius: 100px;
+    height: 20px;
+}
+
+.banner-container {
+    display: flex;
+    background-color: cornflowerblue;
+    height: 400px;
+    margin-top: 10px;
+    justify-content: center ;
+    align-items: center;
+    color: white;
+
+}
+
+.image {
+    position: relative;
+    border-radius: 100px;
+    border: 4px solid white;
+    left: 35vh;
+    top: -5vh;
+}
+
+.footer {
+    display: flex;
+    margin: auto;
+    width: 100%;
+}
+
+.inner-low {
+    display: flex;
+    position: relative;
+    left: 35vh;
+    justify-content: space-between;
+    width: 60%;
+
+}
+
+.followings {
+    justify-content: center;
+    align-items: center;
+
+}
+
+.stats {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    gap: 10px;
+}
+
+.follow button {
+    border-radius: 100px;
+    height: 30px;
+    width: 100px;
+    background-color: cornflowerblue;
+}
+
+.follow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -85px;
+    text-align: center;
+    gap: 10px;
+}
+
+
