@@ -63,11 +63,6 @@
  .block5 { 
     display: grid;
     grid-area: b5;
-    /* grid-template-areas:
-        ". b6"
-        "b6 .";
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr; */
  }
 
  .nested-container2 {
@@ -92,13 +87,16 @@
     display: grid;
     background-color: rgb(15, 220, 220);
     grid-template-areas:
-        ". b6"
-        "b6 .";
-    grid-template-columns: 1fr 1fr ;
+        ". b6-1"
+        "b6-2 .";
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
+}
 
- }
+.block6-1 {
+    grid-area: b6-1;
+}
 
- .block6 {
-    grid-area: b6;
- }
+.block6-2 {
+    grid-area: b6-2;
+}
