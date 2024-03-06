@@ -1,0 +1,19 @@
+.main-box {
+    border: 1px solid black;
+    min-height: 450px;
+    margin: 2vw;
+    padding: 1vh;
+}
+
+.link-box {
+    border: 1px solid black;
+    margin: 1vw;
+}
+
+.right-box {
+    padding-left: 10vw;
+}
+
+.row {
+    margin: 2vh;
+}

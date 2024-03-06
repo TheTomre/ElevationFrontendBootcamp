@@ -1,0 +1,21 @@
+.main-box {
+    border: 1px solid black;
+    height: 100%;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2vh ;
+
+
+
+
+}
+
+.container-sm {
+    border: 1px solid black;
+    width: 95%;;
+    margin-block: 1vh;
+    padding: 2vh;
+
+}
