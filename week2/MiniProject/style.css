@@ -1,0 +1,41 @@
+p {
+    font-size: small;
+    padding-inline: 5px ;
+}
+
+
+
+.girl {
+    min-height: 375px;
+    min-width: 525px;
+}
+
+#button-addon2 {
+    color: white;
+}
+
+.email-input {
+    max-width: 50%;
+}
+
+.icon {
+    font-size: large;
+}
+
+.card.bg-dark:hover {
+    background-color: rgb(187, 184, 184) !important; /* Overrides Bootstrap's background color */
+}
+
+.card.bg-dark:hover .btn.btn-primary {
+    background-color: black; /* Overrides Bootstrap's button background color */
+    border-color: black; /* Changes the button border color to black */
+}
+
+.bottom-text {
+    padding: 0;
+}
+  
+
+
+  
+
