@@ -186,3 +186,5 @@ const story =
 const specialChars = [",", ".", "'", '"', "?", "!", ";"];
 const wordCounts = {};
 
+
+
