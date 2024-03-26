@@ -4,7 +4,6 @@
 }
 
 .main-container {
-
     height: 100vh;
 }
 
@@ -12,10 +11,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
     width: 20%;
     height: 100%;
     background-color: rgb(27, 24, 24);
+
 
 }
 
@@ -24,4 +24,27 @@
     height: 50px;
     background-color: rgb(16, 14, 14);
     border: 1px solid rgb(113, 111, 111);
+    margin: 10px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+}
+
+.green-click {
+    border-color: green;
+}
+
+.red-click {
+    border-color: red;
+}
+
+.tool:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.invent-box {
+    width: 40px;
+    height: 40px;
+    background-color: gray;
+    /* background-image: url('./icons/dirt.png'); */
 }
