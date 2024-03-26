@@ -5,6 +5,7 @@
 
 .main-container {
     height: 100vh;
+    display: flex;
 }
 
 .menu {
@@ -13,7 +14,7 @@
     align-items: center;
     justify-content: space-evenly;
     width: 20%;
-    height: 100%;
+    height: 100vh;
     background-color: rgb(27, 24, 24);
 
 
@@ -30,13 +31,10 @@
 
 }
 
-.green-click {
+.picked {
     border-color: green;
 }
 
-.red-click {
-    border-color: red;
-}
 
 .tool:hover {
     background-color: rgba(255, 255, 255, 0.2);
@@ -46,5 +44,46 @@
     width: 40px;
     height: 40px;
     background-color: gray;
-    /* background-image: url('./icons/dirt.png'); */
+}
+
+.map {
+    width: 80%;
+    display: grid;
+    grid-template-columns: repeat(23, 3rem);
+    grid-template-rows: repeat(15, 3rem);
+    
+}
+
+.tile {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+}
+
+.tile:hover {
+    box-shadow: inset 0 0 0 2px black;
+}
+
+.sky {
+    background-color: #87CEEB;
+}
+
+.cloud {
+    background-color: rgb(225, 207, 207);
+}
+
+.tree {
+    background-image: url('./icons/wood.png');
+}
+
+.grass {
+    background-image: url('./icons/grass.png');
+}
+
+.stone {
+    background-image: url('./icons/stone.png');
+}
+
+.dirt {
+    background-image: url('./icons/dirt.png');
 }
