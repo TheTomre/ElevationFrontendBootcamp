@@ -1,19 +1,3 @@
-let pickedTool = "none";
-
-document.querySelectorAll(".tool").forEach((tool) => {
-    tool.addEventListener("click", function () {
-        removePickedTool();
-        this.classList.toggle("picked");
-        pickedTool = this.getAttribute("tool");
-    });
-});
-
-function removePickedTool() {
-    document.querySelectorAll(".tool").forEach((tool) => {
-        tool.classList.remove("picked");
-    });
-}
-
 const map = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -32,9 +16,28 @@ const map = [
     [5, 5, 5, 5, 3, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
 ];
 
-function crateWorld() {
+let pickedTool = "none";
+
+const inventory = {
+    item: "none",
+    picked: false
+}
+
+const inventBox =  document.getElementById('invent-box');
+
+
+function removePickedTool() {
+    document.querySelectorAll(".tool").forEach((tool) => {
+        tool.classList.remove("picked");
+    });
+}
+
+function createWorld() {
     const worldElement = document.getElementById("world");
     worldElement.innerHTML = "";
+    pickedTool = "none";
+    inventory.item = "none";
+    inventory.picked = false;
 
     for (let row = 0; row < map.length; row++) {
         for (let col = 0; col < map[row].length; col++) {
@@ -59,12 +62,17 @@ function crateWorld() {
     }
 }
 
-crateWorld();
 
-const inventory = {
-    item: "none",
-    picked: false
-}
+document.querySelectorAll(".tool").forEach((tool) => {
+    tool.addEventListener("click", function () {
+        removePickedTool();
+        this.classList.toggle("picked");
+        pickedTool = this.getAttribute("tool");
+    });
+});
+
+
+
 
 function updateInventory(newItem) {
     const inventoryBox = document.getElementById('invent-box');
@@ -73,9 +81,15 @@ function updateInventory(newItem) {
     inventory.item = newItem;
 }
 
+inventBox.addEventListener("click", () => {
+    removePickedTool();
+    pickedTool = "none";
+    inventory.picked = true;
+    
+})
+
 document.querySelectorAll(".tile").forEach((tile) => {
     tile.addEventListener("click", function () {
-        const tileType = this.getAttribute("tile-type");
         if (this.classList.contains("tree") && pickedTool === "axe") {
             this.classList.remove("tree");
             this.classList.add("sky");
@@ -94,10 +108,20 @@ document.querySelectorAll(".tile").forEach((tile) => {
         } else if (
             this.classList.contains("stone") &&
             pickedTool === "pickaxe"
-        ) {
+        ){
             this.classList.remove("stone");
             this.classList.add("sky");
             updateInventory("stone");
+        } else if (pickedTool === "none" && inventory.picked === true && this.classList.contains("sky") ) {
+            this.classList.remove("sky");
+            this.classList.add(inventory.item);
+            updateInventory("none")
+            inventory.picked = false;
+            
+            
         }
     });
 });
+
+
+createWorld();

@@ -43,11 +43,19 @@
 .invent-box {
     width: 40px;
     height: 40px;
+}
+
+.none {
     background-color: gray;
+}
+
+.invent-box:hover {
+    border: 2px solid green;
 }
 
 .map {
     width: 80%;
+    height: 100vh;
     display: grid;
     grid-template-columns: repeat(23, 3rem);
     grid-template-rows: repeat(15, 3rem);
