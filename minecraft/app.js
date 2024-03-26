@@ -14,8 +14,6 @@ function removePickedTool() {
     });
 }
 
-const width = 23;
-const height = 15;
 const map = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -44,22 +42,16 @@ function crateWorld() {
             tileElement.classList.add("tile");
             if (map[row][col] === 0) {
                 tileElement.classList.add("sky");
-                tileElement.setAttribute("tile-type", "sky")
             } else if (map[row][col] === 1) {
                 tileElement.classList.add("cloud");
-                tileElement.setAttribute("ttileype-type", "cloud")
             } else if (map[row][col] === 2) {
                 tileElement.classList.add("tree");
-                tileElement.setAttribute("tile-type", "tree")
             } else if (map[row][col] === 3) {
                 tileElement.classList.add("dirt");
-                tileElement.setAttribute("tile-type", "dirt")
             } else if (map[row][col] === 4) {
                 tileElement.classList.add("grass");
-                tileElement.setAttribute("tile-type", "grass")
             } else if (map[row][col] === 5) {
                 tileElement.classList.add("stone");
-                tileElement.setAttribute("tile-type", "stone")
             }
 
             worldElement.appendChild(tileElement);
@@ -67,24 +59,45 @@ function crateWorld() {
     }
 }
 
-
 crateWorld();
 
-const inventory = document.getElementById("invent-box");
+const inventory = {
+    item: "none",
+    picked: false
+}
+
+function updateInventory(newItem) {
+    const inventoryBox = document.getElementById('invent-box');
+    inventoryBox.classList.remove(inventory.item);
+    inventoryBox.classList.add(newItem);
+    inventory.item = newItem;
+}
 
 document.querySelectorAll(".tile").forEach((tile) => {
     tile.addEventListener("click", function () {
         const tileType = this.getAttribute("tile-type");
-        if (
-            (tileType === "tree" && pickedTool === "axe") ||
-            (tileType === "grass" && pickedTool === "shovel") ||
-            (tileType === "dirt" && pickedTool === "shovel") ||
-            (tileType === "stone" && pickedTool === "pickaxe")
-        ) {
-            this.classList.remove(tileType);
+        if (this.classList.contains("tree") && pickedTool === "axe") {
+            this.classList.remove("tree");
             this.classList.add("sky");
-            // inventory.classList.toggle()
-            inventory.classList.add(tileType)
+            updateInventory("tree");
+        } else if (
+            this.classList.contains("grass") &&
+            pickedTool === "shovel"
+        ) {
+            this.classList.remove("grass");
+            this.classList.add("sky");
+            updateInventory("grass")
+        } else if (this.classList.contains("dirt") && pickedTool === "shovel") {
+            this.classList.remove("dirt");
+            this.classList.add("sky");
+            updateInventory("dirt");
+        } else if (
+            this.classList.contains("stone") &&
+            pickedTool === "pickaxe"
+        ) {
+            this.classList.remove("stone");
+            this.classList.add("sky");
+            updateInventory("stone");
         }
     });
 });
