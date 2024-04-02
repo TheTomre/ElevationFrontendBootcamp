@@ -3675,6 +3675,54 @@ function createFullNamesArr(arr) {
     return result;
 }
 
-console.log(createFullNamesArr(contacts));
+// console.log(createFullNamesArr(contacts));
+
+function logEmails(arr) {
+    for (let i = 0; i < arr.length; i++) {
+        const email = arr[i].email;
+        console.log(email)
+        
+    }
+}
+
+// logEmails(contacts)
+
+function findById(arr, id) {
+    return arr.find(element => element.id.name === id.name && element.id.value === id.value);
+
+}
+
+// console.log(findById(contacts, { name: "NINO", value: "BX 38 46 32 E" }))
 
 
+
+function countCountries(arr) {
+    const countries = [];
+    let result = 0;
+    arr.forEach((element) => {
+        const country = element?.location?.country.toLowerCase();
+        if (!countries.includes(country)) {
+            countries.push(country);
+            result++
+
+        }
+    });
+    return result;
+}
+
+
+// console.log(countCountries(contacts))
+
+function countSpecificCountries (arr, country) {
+    const countriesArray = arr.filter(element => element.location.country.toLowerCase() === country.toLowerCase());
+    return countriesArray.length
+
+}
+
+// console.log(countSpecificCountries(contacts, "spain"))
+
+function showUseresOfSpecialAge (arr, lowAge, topAge) {
+    return arr.filter(element => element.dob.age >= lowAge && element.dob.age <= topAge);
+}
+
+console.log(showUseresOfSpecialAge(contacts, 29, 35))
