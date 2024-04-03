@@ -3680,21 +3680,20 @@ function createFullNamesArr(arr) {
 function logEmails(arr) {
     for (let i = 0; i < arr.length; i++) {
         const email = arr[i].email;
-        console.log(email)
-        
+        console.log(email);
     }
 }
 
 // logEmails(contacts)
 
 function findById(arr, id) {
-    return arr.find(element => element.id.name === id.name && element.id.value === id.value);
-
+    return arr.find(
+        (element) =>
+            element.id.name === id.name && element.id.value === id.value
+    );
 }
 
 // console.log(findById(contacts, { name: "NINO", value: "BX 38 46 32 E" }))
-
-
 
 function countCountries(arr) {
     const countries = [];
@@ -3703,26 +3702,28 @@ function countCountries(arr) {
         const country = element?.location?.country.toLowerCase();
         if (!countries.includes(country)) {
             countries.push(country);
-            result++
-
+            result++;
         }
     });
     return result;
 }
 
-
 // console.log(countCountries(contacts))
 
-function countSpecificCountries (arr, country) {
-    const countriesArray = arr.filter(element => element.location.country.toLowerCase() === country.toLowerCase());
-    return countriesArray.length
-
+function countSpecificCountries(arr, country) {
+    const countriesArray = arr.filter(
+        (element) =>
+            element.location.country.toLowerCase() === country.toLowerCase()
+    );
+    return countriesArray.length;
 }
 
 // console.log(countSpecificCountries(contacts, "spain"))
 
-function showUseresOfSpecialAge (arr, lowAge, topAge) {
-    return arr.filter(element => element.dob.age >= lowAge && element.dob.age <= topAge);
+function showUseresOfSpecialAge(arr, lowAge, topAge) {
+    return arr.filter(
+        (element) => element.dob.age >= lowAge && element.dob.age <= topAge
+    );
 }
 
-console.log(showUseresOfSpecialAge(contacts, 29, 35))
+// console.log(showUseresOfSpecialAge(contacts, 29, 35));
