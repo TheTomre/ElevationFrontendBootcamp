@@ -3,11 +3,11 @@ import './ToDo.css';
 
 function ToDo({ todo, deleteTodo }) {
 
-    const handleDelete = () => {
-        if (window.confirm('Are you sure you want to delete this todo?')) {
-          deleteTodo(todo.id);
-        }
-      };
+  const handleDelete = () => {
+    if (window.confirm(`Are you sure you want to delete the todo "${todo.title}"?`)) {
+      deleteTodo(todo.id);
+    }
+  };
 
   return (
     <div className="todo-container">
@@ -21,7 +21,7 @@ function ToDo({ todo, deleteTodo }) {
         <p style={{ color: 'green' }}>Date: {todo.date}</p>
       </div>
       <div className="todo-action">
-      <button onClick={handleDelete}>Delete</button>
+        <button onClick={handleDelete}>Delete</button>
       </div>
     </div>
   );
