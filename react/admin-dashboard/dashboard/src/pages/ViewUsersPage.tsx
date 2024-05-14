@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useUser } from '../context/UserContext';
+import { Link } from 'react-router-dom';
 
 const ViewUsersPage: React.FC = () => {
   const { users, getUsers, deleteUserById } = useUser();
@@ -19,6 +20,7 @@ const ViewUsersPage: React.FC = () => {
         {users.map((user) => (
           <li key={user.id}>
             {user.firstName} {user.lastName} - {user.email}
+            <Link to={`/edit-user/${user.id}`}>Edit</Link>
             <button onClick={() => handleDelete(user.id)}>Delete</button>
           </li>
         ))}
@@ -26,5 +28,6 @@ const ViewUsersPage: React.FC = () => {
     </div>
   );
 };
+
 
 export default ViewUsersPage;
