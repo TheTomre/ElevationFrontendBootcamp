@@ -5,7 +5,7 @@ export interface User {
   lastName: string;
   email: string;
   password: string;
-  dob: string;
+  dob?: string;
 }
 
 export interface CreateUser {
