@@ -4,9 +4,11 @@ import {
   updateUser as updateUserService,
   getUserById as getUserByIdService,
   getUsers as getUsersService,
-  deleteUserById as deleteUserByIdService
+  deleteUserById as deleteUserByIdService,
+  initializeUsers
 } from '../service/users';
 import type { User, CreateUser } from '../types/User';
+import usersData from '../mocks/jsons/users.json';
 
 interface UserContextType {
   users: User[];
@@ -34,12 +36,8 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    // Fetch initial users if needed
-    const fetchUsers = async () => {
-      const initialUsers = await getUsersService(1, 10);
-      setUsers(initialUsers);
-    };
-    fetchUsers();
+    initializeUsers(usersData);
+    setUsers(usersData);
   }, []);
 
   const createUser = async (user: CreateUser) => {

@@ -4,7 +4,13 @@ import makeUUID from '../utils/makeUUID';
 import parseDate from '../utils/parseDate';
 // MOCK METHODS
 
-const USERS: User[] = [];
+let USERS: User[] = [];
+
+
+
+export const initializeUsers = (initialUsers: User[]) => {
+  USERS = initialUsers;
+};
 
 // create a user
 export const createUser = async (user: CreateUser): Promise<{ id: string } | { error: string }> => {
