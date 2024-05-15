@@ -6,10 +6,12 @@ const Navbar: React.FC = () => {
   const { isAuthenticated, logout } = useAuth();
 
   return (
-    <nav>
-      <Link to="/view-users">View Users</Link>
-      <Link to="/create-user">Create User</Link>
-      {isAuthenticated && <button onClick={logout}>Logout</button>}
+    <nav className="bg-blue-600 dark:bg-darkCard text-white p-4 flex justify-between items-center">
+      <div className="space-x-4">
+        <Link to="/view-users" className="hover:underline">View Users</Link>
+        <Link to="/create-user" className="hover:underline">Create User</Link>
+      </div>
+      {isAuthenticated && <button onClick={logout} className="bg-red-500 px-4 py-2 rounded hover:bg-red-600">Logout</button>}
     </nav>
   );
 };

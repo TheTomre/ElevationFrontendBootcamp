@@ -20,11 +20,11 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md w-80">
-        <h2 className="text-2xl mb-4">Login</h2>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-darkBackground">
+      <form onSubmit={handleSubmit} className="bg-white dark:bg-darkCard p-6 rounded shadow-md w-80">
+        <h2 className="text-2xl mb-4 text-gray-900 dark:text-darkText">Login</h2>
         <div className="mb-4">
-          <label className="block text-gray-700">Username</label>
+          <label className="block text-gray-700 dark:text-darkText">Username</label>
           <input
             type="text"
             value={username}
@@ -33,7 +33,7 @@ const LoginForm: React.FC = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700">Password</label>
+          <label className="block text-gray-700 dark:text-darkText">Password</label>
           <input
             type="password"
             value={password}

@@ -4,9 +4,9 @@ import Navbar from '../components/Navbar';
 
 const DashboardPage: React.FC = () => {
   return (
-    <div>
+    <div className="min-h-screen flex flex-col bg-gray-100 dark:bg-darkBackground">
       <Navbar />
-      <div>
+      <div className="flex-1 p-4">
         <Outlet />
       </div>
     </div>
