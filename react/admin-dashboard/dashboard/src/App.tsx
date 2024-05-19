@@ -7,6 +7,8 @@ import DashboardPage from './pages/DashboardPage';
 import ViewUsersPage from './pages/ViewUsersPage';
 import CreateUserPage from './pages/CreateUserPage';
 import EditUserPage from './pages/EditUserPage';
+import LanguageSelector from './components/LanguageSelector';
+import './i18n';
 
 interface GuardRouteProps {
   children: JSX.Element;
@@ -21,16 +23,25 @@ const App: React.FC = () => {
   return (
     <AuthProvider>
       <UserProvider>
-      <Router>
-        <Routes>
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/" element={<GuardRoute><DashboardPage /></GuardRoute>}>
-            <Route path="view-users" element={<ViewUsersPage />} />
-            <Route path="create-user" element={<CreateUserPage />} />
-            <Route path="edit-user/:id" element={<EditUserPage />} />
-          </Route>
-        </Routes>
-      </Router>
+        <Router>
+            <LanguageSelector />
+            <Routes>
+              <Route path="/login" element={<LoginForm />} />
+              <Route
+                path="/"
+                element={
+                  <GuardRoute>
+                    <DashboardPage />
+                  </GuardRoute>
+                }
+              >
+                <Route path="view-users" element={<ViewUsersPage />} />
+                <Route path="create-user" element={<CreateUserPage />} />
+                <Route path="edit-user/:id" element={<EditUserPage />} />
+              </Route>
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+        </Router>
       </UserProvider>
     </AuthProvider>
   );

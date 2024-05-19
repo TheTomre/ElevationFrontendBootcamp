@@ -3,6 +3,7 @@ import { useUser } from "../context/UserContext";
 import { Link } from "react-router-dom";
 import { User } from "../types/User";
 import DeleteConfirmationModal from "../components/DeleteConfirmationModal";
+import { useTranslation } from 'react-i18next';
 
 const ViewUsersPage: React.FC = () => {
   const { users, getUsers, deleteUserById } = useUser();
@@ -14,6 +15,8 @@ const ViewUsersPage: React.FC = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userIdToDelete, setUserIdToDelete] = useState<string | null>(null);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -57,26 +60,25 @@ const ViewUsersPage: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 max-w-xl bg-gray-100 dark:bg-darkBackground">
-      <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-darkText">Users</h1>
+    <div className="container mx-auto p-4 max-w-2xl bg-gray-100 dark:bg-darkBackground">
+      <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-darkText">{t('users.title')}</h1>
       <div className="mb-4">
-        <label className="block text-gray-700 dark:text-darkText mb-1">Filter: </label>
         <input
           type="text"
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          placeholder="Filter by name or email"
+          placeholder={t('users.filter')}
           className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:placeholder-gray-400 dark:focus:ring-gray-500 dark:focus:border-gray-500"
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700 dark:text-darkText mb-1">Sort By: </label>
+        <label className="block text-gray-700 dark:text-darkText mb-1">{t('users.sortBy')}:</label>
         <select
           onChange={(e) => setSortKey(e.target.value as 'firstName' | 'email')}
           className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:placeholder-gray-400 dark:focus:ring-gray-500 dark:focus:border-gray-500"
         >
-          <option value="firstName">First Name</option>
-          <option value="email">Email</option>
+          <option value="firstName">{t('users.firstName')}</option>
+          <option value="email">{t('users.email')}</option>
         </select>
       </div>
       <ul className="space-y-2">
@@ -88,14 +90,14 @@ const ViewUsersPage: React.FC = () => {
             <div>
               <Link to={`/edit-user/${user.id}`}>
                 <button className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 mr-2">
-                  Edit
+                  {t('users.edit')}
                 </button>
               </Link>
               <button
                 onClick={() => openModal(user.id)}
                 className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
               >
-                Delete
+                {t('users.delete')}
               </button>
             </div>
           </li>
@@ -107,17 +109,17 @@ const ViewUsersPage: React.FC = () => {
           disabled={page === 1}
           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:opacity-50"
         >
-          Previous
+          {t('users.page')} {page}
         </button>
         <div className="text-gray-700 dark:text-darkText">
-          Page {page} of {totalPages}
+          {t('users.page')} {page} {t('users.of')} {totalPages}
         </div>
         <button
           onClick={() => setPage((prev) => (prev < totalPages ? prev + 1 : prev))}
           disabled={page >= totalPages}
           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:opacity-50"
         >
-          Next
+          {t('users.page')} {page + 1}
         </button>
       </div>
       <DeleteConfirmationModal 

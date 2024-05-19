@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const LoginForm: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -8,6 +9,7 @@ const LoginForm: React.FC = () => {
   const [error, setError] = useState('');
   const { login } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,16 +17,16 @@ const LoginForm: React.FC = () => {
     if (success) {
       navigate('/view-users'); 
     } else {
-      setError('Invalid username or password');
+      setError(t('login.error'));
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-darkBackground">
       <form onSubmit={handleSubmit} className="bg-white dark:bg-darkCard p-6 rounded shadow-md w-80">
-        <h2 className="text-2xl mb-4 text-gray-900 dark:text-darkText">Login</h2>
+        <h2 className="text-2xl mb-4 text-gray-900 dark:text-darkText">{t('login.title')}</h2>
         <div className="mb-4">
-          <label className="block text-gray-700 dark:text-darkText">Username</label>
+          <label className="block text-gray-700 dark:text-darkText">{t('login.username')}</label>
           <input
             type="text"
             value={username}
@@ -33,7 +35,7 @@ const LoginForm: React.FC = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 dark:text-darkText">Password</label>
+          <label className="block text-gray-700 dark:text-darkText">{t('login.password')}</label>
           <input
             type="password"
             value={password}
@@ -43,7 +45,7 @@ const LoginForm: React.FC = () => {
         </div>
         {error && <div className="text-red-500 mb-4">{error}</div>}
         <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">
-          Login
+          {t('login.submit')}
         </button>
       </form>
     </div>
@@ -51,4 +53,3 @@ const LoginForm: React.FC = () => {
 };
 
 export default LoginForm;
-

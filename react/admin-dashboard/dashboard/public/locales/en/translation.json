@@ -1,0 +1,55 @@
+{
+  "login": {
+    "title": "Login",
+    "username": "Username",
+    "password": "Password",
+    "submit": "Login",
+    "error": "Invalid username or password"
+  },
+  "navbar": {
+    "viewUsers": "View Users",
+    "createUser": "Create User",
+    "logout": "Logout"
+  },
+  "dashboard": {
+    "title": "Dashboard"
+  },
+  "users": {
+    "title": "Users",
+    "filter": "Filter by name or email",
+    "sortBy": "Sort By",
+    "firstName": "First Name",
+    "email": "Email",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirmDelete": "Confirm Deletion",
+    "confirmDeleteMessage": "Are you sure you want to delete this user?",
+    "cancel": "Cancel",
+    "deleteUser": "Delete",
+    "page": "Page",
+    "of": "of"
+  },
+  "createUser": {
+    "title": "Create User",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "password": "Password",
+    "dob": "Date of Birth",
+    "createButton": "Create User",
+    "errorRequired": "All fields are required",
+    "errorEmail": "Invalid email address",
+    "errorPassword": "Password must be at least 6 characters long"
+  },
+  "editUser": {
+    "title": "Edit User",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "password": "Password",
+    "dob": "Date of Birth",
+    "updateButton": "Update User",
+    "errorUpdating": "Failed to update user",
+    "errorUserId": "User ID is undefined"
+  }
+}
