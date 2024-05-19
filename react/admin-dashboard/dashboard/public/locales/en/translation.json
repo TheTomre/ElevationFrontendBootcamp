@@ -37,9 +37,15 @@
     "password": "Password",
     "dob": "Date of Birth",
     "createButton": "Create User",
-    "errorRequired": "All fields are required",
-    "errorEmail": "Invalid email address",
-    "errorPassword": "Password must be at least 6 characters long"
+    "error": {
+      "firstName": "First name is required",
+      "lastName": "Last name is required",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Invalid email address",
+      "passwordRequired": "Password is required",
+      "passwordLength": "Password must be at least 6 characters long",
+      "dob": "Date of Birth is required"
+    }
   },
   "editUser": {
     "title": "Edit User",
@@ -49,7 +55,16 @@
     "password": "Password",
     "dob": "Date of Birth",
     "updateButton": "Update User",
-    "errorUpdating": "Failed to update user",
-    "errorUserId": "User ID is undefined"
+    "error": {
+      "firstName": "First name is required",
+      "lastName": "Last name is required",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Invalid email address",
+      "passwordRequired": "Password is required",
+      "passwordLength": "Password must be at least 6 characters long",
+      "dob": "Date of Birth is required",
+      "updating": "Failed to update user",
+      "userId": "User ID is undefined"
+    }
   }
 }
