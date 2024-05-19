@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 import { useTranslation } from 'react-i18next';
+import InputField from '../components/InputField';
 
 const EditUserPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -13,7 +14,7 @@ const EditUserPage: React.FC = () => {
     password: '',
     dob: '',
   });
-  const [error, setError] = useState('');
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -36,13 +37,34 @@ const EditUserPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const newErrors: { [key: string]: string } = {};
+
+    if (!user.firstName) newErrors.firstName = t('editUser.error.firstName');
+    if (!user.lastName) newErrors.lastName = t('editUser.error.lastName');
+    if (!user.email) {
+      newErrors.email = t('editUser.error.emailRequired');
+    } else if (!user.email.includes('@')) {
+      newErrors.email = t('editUser.error.emailInvalid');
+    }
+    if (!user.password) {
+      newErrors.password = t('editUser.error.passwordRequired');
+    } else if (user.password.length < 6) {
+      newErrors.password = t('editUser.error.passwordLength');
+    }
+    if (!user.dob) newErrors.dob = t('editUser.error.dob');
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
     if (id) {
       const result = await updateUser(id, user);
       if (!result) {
-        setError(t('editUser.errorUpdating'));
+        setErrors({ general: t('editUser.error.updating') });
       }
     } else {
-      setError(t('editUser.errorUserId'));
+      setErrors({ general: t('editUser.error.userId') });
     }
   };
 
@@ -50,52 +72,12 @@ const EditUserPage: React.FC = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-darkBackground">
       <form onSubmit={handleSubmit} className="bg-white dark:bg-darkCard p-6 rounded shadow-md w-80">
         <h2 className="text-2xl mb-4 text-gray-900 dark:text-darkText">{t('editUser.title')}</h2>
-        <div className="mb-4">
-          <label className="block text-gray-700 dark:text-darkText">{t('editUser.firstName')}</label>
-          <input
-            type="text"
-            value={user.firstName}
-            onChange={(e) => setUser({ ...user, firstName: e.target.value })}
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:placeholder-gray-400 dark:focus:ring-gray-500 dark:focus:border-gray-500"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 dark:text-darkText">{t('editUser.lastName')}</label>
-          <input
-            type="text"
-            value={user.lastName}
-            onChange={(e) => setUser({ ...user, lastName: e.target.value })}
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:placeholder-gray-400 dark:focus:ring-gray-500 dark:focus:border-gray-500"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 dark:text-darkText">{t('editUser.email')}</label>
-          <input
-            type="email"
-            value={user.email}
-            onChange={(e) => setUser({ ...user, email: e.target.value })}
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:placeholder-gray-400 dark:focus:ring-gray-500 dark:focus:border-gray-500"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 dark:text-darkText">{t('editUser.password')}</label>
-          <input
-            type="password"
-            value={user.password}
-            onChange={(e) => setUser({ ...user, password: e.target.value })}
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:placeholder-gray-400 dark:focus:ring-gray-500 dark:focus:border-gray-500"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 dark:text-darkText">{t('editUser.dob')}</label>
-          <input
-            type="date"
-            value={user.dob}
-            onChange={(e) => setUser({ ...user, dob: e.target.value })}
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:placeholder-gray-400 dark:focus:ring-gray-500 dark:focus:border-gray-500"
-          />
-        </div>
-        {error && <div className="text-red-500 mb-4">{error}</div>}
+        <InputField label={t('editUser.firstName')} type="text" value={user.firstName} onChange={(e) => setUser({ ...user, firstName: e.target.value })} error={errors.firstName} />
+        <InputField label={t('editUser.lastName')} type="text" value={user.lastName} onChange={(e) => setUser({ ...user, lastName: e.target.value })} error={errors.lastName} />
+        <InputField label={t('editUser.email')} type="email" value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} error={errors.email} />
+        <InputField label={t('editUser.password')} type="password" value={user.password} onChange={(e) => setUser({ ...user, password: e.target.value })} error={errors.password} />
+        <InputField label={t('editUser.dob')} type="date" value={user.dob} onChange={(e) => setUser({ ...user, dob: e.target.value })} error={errors.dob} />
+        {errors.general && <div className="text-red-500 mb-4">{errors.general}</div>}
         <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">
           {t('editUser.updateButton')}
         </button>

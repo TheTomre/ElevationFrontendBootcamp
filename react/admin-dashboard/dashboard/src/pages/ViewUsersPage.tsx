@@ -3,6 +3,9 @@ import { useUser } from "../context/UserContext";
 import { Link } from "react-router-dom";
 import { User } from "../types/User";
 import DeleteConfirmationModal from "../components/DeleteConfirmationModal";
+import Filter from "../components/Filter";
+import SortSelect from "../components/SortSelect";
+import PaginationControls from "../components/PaginationControls";
 import { useTranslation } from 'react-i18next';
 
 const ViewUsersPage: React.FC = () => {
@@ -62,25 +65,16 @@ const ViewUsersPage: React.FC = () => {
   return (
     <div className="container mx-auto p-4 max-w-2xl bg-gray-100 dark:bg-darkBackground">
       <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-darkText">{t('users.title')}</h1>
-      <div className="mb-4">
-        <input
-          type="text"
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-          placeholder={t('users.filter')}
-          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:placeholder-gray-400 dark:focus:ring-gray-500 dark:focus:border-gray-500"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 dark:text-darkText mb-1">{t('users.sortBy')}:</label>
-        <select
-          onChange={(e) => setSortKey(e.target.value as 'firstName' | 'email')}
-          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:placeholder-gray-400 dark:focus:ring-gray-500 dark:focus:border-gray-500"
-        >
-          <option value="firstName">{t('users.firstName')}</option>
-          <option value="email">{t('users.email')}</option>
-        </select>
-      </div>
+      <Filter value={filter} onChange={(e) => setFilter(e.target.value)} placeholder={t('users.filter')} />
+      <SortSelect
+        sortKey={sortKey}
+        onChange={(e) => setSortKey(e.target.value as 'firstName' | 'email')}
+        label={t('users.sortBy')}
+        options={[
+          { value: 'firstName', label: t('users.firstName') },
+          { value: 'email', label: t('users.email') },
+        ]}
+      />
       <ul className="space-y-2">
         {sortedUsers.map((user) => (
           <li key={user.id} className="bg-white dark:bg-darkCard p-4 rounded shadow-md flex justify-between items-center">
@@ -103,25 +97,13 @@ const ViewUsersPage: React.FC = () => {
           </li>
         ))}
       </ul>
-      <div className="mt-4 flex justify-between items-center">
-        <button
-          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-          disabled={page === 1}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:opacity-50"
-        >
-          {t('users.page')} {page}
-        </button>
-        <div className="text-gray-700 dark:text-darkText">
-          {t('users.page')} {page} {t('users.of')} {totalPages}
-        </div>
-        <button
-          onClick={() => setPage((prev) => (prev < totalPages ? prev + 1 : prev))}
-          disabled={page >= totalPages}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:opacity-50"
-        >
-          {t('users.page')} {page + 1}
-        </button>
-      </div>
+      <PaginationControls
+        page={page}
+        totalPages={totalPages}
+        onPrevious={() => setPage((prev) => Math.max(prev - 1, 1))}
+        onNext={() => setPage((prev) => (prev < totalPages ? prev + 1 : prev))}
+        label={t('users.page')}
+      />
       <DeleteConfirmationModal 
         isOpen={isModalOpen} 
         onClose={closeModal} 
