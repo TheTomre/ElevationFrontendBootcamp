@@ -7,7 +7,6 @@ import DashboardPage from './pages/DashboardPage';
 import ViewUsersPage from './pages/ViewUsersPage';
 import CreateUserPage from './pages/CreateUserPage';
 import EditUserPage from './pages/EditUserPage';
-import LanguageSelector from './components/LanguageSelector';
 import './i18n';
 
 interface GuardRouteProps {
@@ -24,7 +23,6 @@ const App: React.FC = () => {
     <AuthProvider>
       <UserProvider>
         <Router>
-            <LanguageSelector />
             <Routes>
               <Route path="/login" element={<LoginForm />} />
               <Route

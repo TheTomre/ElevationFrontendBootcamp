@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTranslation } from 'react-i18next';
+import LanguageSelector from './LanguageSelector';
 
 const Navbar: React.FC = () => {
   const { isAuthenticated, logout } = useAuth();
@@ -14,9 +15,10 @@ const Navbar: React.FC = () => {
         <Link to="/create-user" className="hover:underline">{t('navbar.createUser')}</Link>
       </div>
       {isAuthenticated && (
-        <button onClick={logout} className="bg-red-500 px-4 py-2 rounded hover:bg-red-600">
-          {t('navbar.logout')}
-        </button>
+        <div className="flex items-center space-x-4">
+        <LanguageSelector />
+        <button onClick={logout} className="bg-red-500 px-4 py-2 rounded hover:bg-red-600">Logout</button>
+      </div>
       )}
     </nav>
   );
