@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import InputField from '../components/InputField';
 import { useAppDispatch } from '../store';
 import { createUser } from '../store/slices/users';
+import makeUUID from '../utils/makeUUID';
 
 const CreateUserPage: React.FC = () => {
   const [firstName, setFirstName] = useState('');
@@ -38,7 +39,7 @@ const CreateUserPage: React.FC = () => {
     }
 
     try {
-      dispatch(createUser({ firstName, lastName, email, password, dob }));
+      dispatch(createUser({id:makeUUID(), firstName, lastName, email, password, dob }));
       setFirstName('');
       setLastName('');
       setEmail('');
