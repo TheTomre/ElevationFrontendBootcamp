@@ -17,31 +17,27 @@ const ViewUsersPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const sortedUsers = useAppSelector((state) => state.users.usersPage);
   const usersLength = useAppSelector((state) => state.users.users.length);
-  const [limit] = useState(12);
+  const [limit] = useState(10);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotoalPages] = useState(usersLength / limit);
+  const [totalPages, setTotalPages] = useState(Math.ceil(usersLength / limit));
 
   const { t } = useTranslation();
 
   useEffect(() => {
     const seedUsersOnLoad = async () => {
-      const allUsers = await initializeUsers();
-      dispatch(setUsers(allUsers));
+      if (usersLength === 0) {
+        const allUsers = await initializeUsers();
+        dispatch(setUsers(allUsers));
+      }
     };
 
     seedUsersOnLoad();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch, usersLength]);
 
   useEffect(() => {
-    if (usersLength) {
-      dispatch(setUsersPaginated({ page, limit, filter }));
-    }
-    setTotoalPages(usersLength / limit);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, limit, usersLength]);
+    dispatch(setUsersPaginated({ page, limit, filter, sort: sortKey }));
+    setTotalPages(Math.ceil(usersLength / limit));
+  }, [page, limit, usersLength, filter, sortKey, dispatch]);
 
   const openModal = (id: string) => {
     setUserIdToDelete(id);

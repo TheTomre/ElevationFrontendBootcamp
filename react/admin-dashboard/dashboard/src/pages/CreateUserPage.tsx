@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useUser } from '../context/UserContext';
 import { useTranslation } from 'react-i18next';
 import InputField from '../components/InputField';
+import { useAppDispatch } from '../store';
+import { createUser } from '../store/slices/users';
 
 const CreateUserPage: React.FC = () => {
   const [firstName, setFirstName] = useState('');
@@ -10,10 +11,10 @@ const CreateUserPage: React.FC = () => {
   const [password, setPassword] = useState('');
   const [dob, setDob] = useState('');
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const { createUser } = useUser();
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: { [key: string]: string } = {};
 
@@ -36,16 +37,20 @@ const CreateUserPage: React.FC = () => {
       return;
     }
 
-    const result = await createUser({ firstName, lastName, email, password, dob });
-    if ('error' in result) {
-      setErrors({ general: result.error });
-    } else {
+    try {
+      dispatch(createUser({ firstName, lastName, email, password, dob }));
       setFirstName('');
       setLastName('');
       setEmail('');
       setPassword('');
       setDob('');
       setErrors({});
+    } catch (error) {
+      if (error instanceof Error) {
+        setErrors({ general: error.message });
+      } else {
+        setErrors({ general: 'An unknown error occurred' });
+      }
     }
   };
 
