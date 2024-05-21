@@ -1,48 +1,47 @@
-import React, { useEffect, useState } from "react";
-import { useUser } from "../context/UserContext";
-import { Link } from "react-router-dom";
-import { User } from "../types/User";
-import DeleteConfirmationModal from "../components/DeleteConfirmationModal";
-import Filter from "../components/Filter";
-import SortSelect from "../components/SortSelect";
-import PaginationControls from "../components/PaginationControls";
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
+import Filter from '../components/Filter';
+import SortSelect from '../components/SortSelect';
+import PaginationControls from '../components/PaginationControls';
 import { useTranslation } from 'react-i18next';
+import { initializeUsers } from '../service/users';
+import { useAppDispatch, useAppSelector } from '../store';
+import { setUsers, setUsersPaginated, deleteUserById as removeFromReduxUsers } from '../store/slices/users';
 
 const ViewUsersPage: React.FC = () => {
-  const { users, getUsers, deleteUserById } = useUser();
-  const [sortedUsers, setSortedUsers] = useState<User[]>([]);
   const [filter, setFilter] = useState('');
   const [sortKey, setSortKey] = useState<'firstName' | 'email'>('firstName');
-  const [page, setPage] = useState(1);
-  const [limit] = useState(10);
-  const [totalPages, setTotalPages] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userIdToDelete, setUserIdToDelete] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
+  const sortedUsers = useAppSelector((state) => state.users.usersPage);
+  const usersLength = useAppSelector((state) => state.users.users.length);
+  const [limit] = useState(12);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotoalPages] = useState(usersLength / limit);
 
   const { t } = useTranslation();
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      const fetchedUsers = await getUsers(page, limit);
-      setSortedUsers(fetchedUsers);
-      setTotalPages(Math.ceil(users.length / limit));
+    const seedUsersOnLoad = async () => {
+      const allUsers = await initializeUsers();
+      dispatch(setUsers(allUsers));
     };
-    fetchUsers();
-  }, [getUsers, page, limit, users.length]);
+
+    seedUsersOnLoad();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
-    const filtered = users.filter((user) =>
-      user.firstName.toLowerCase().includes(filter.toLowerCase()) ||
-      user.email.toLowerCase().includes(filter.toLowerCase())
-    );
-    const sorted = filtered.sort((a, b) => {
-      if (sortKey === 'firstName') {
-        return a.firstName.localeCompare(b.firstName);
-      }
-      return a.email.localeCompare(b.email);
-    });
-    setSortedUsers(sorted.slice(0, limit));
-  }, [users, filter, sortKey, limit]);
+    if (usersLength) {
+      dispatch(setUsersPaginated({ page, limit, filter }));
+    }
+    setTotoalPages(usersLength / limit);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, limit, usersLength]);
 
   const openModal = (id: string) => {
     setUserIdToDelete(id);
@@ -56,8 +55,7 @@ const ViewUsersPage: React.FC = () => {
 
   const confirmDelete = async () => {
     if (userIdToDelete) {
-      await deleteUserById(userIdToDelete);
-      getUsers(page, limit); // Refresh users after deletion
+      dispatch(removeFromReduxUsers(userIdToDelete));
       closeModal();
     }
   };
@@ -77,9 +75,15 @@ const ViewUsersPage: React.FC = () => {
       />
       <ul className="space-y-2">
         {sortedUsers.map((user) => (
-          <li key={user.id} className="bg-white dark:bg-darkCard p-4 rounded shadow-md flex justify-between items-center">
+          <li
+            key={user.id}
+            className="bg-white dark:bg-darkCard p-4 rounded shadow-md flex justify-between items-center"
+          >
             <div>
-              <span className="font-bold text-gray-900 dark:text-darkText">{user.firstName} {user.lastName}</span> - {user.email}
+              <span className="font-bold text-gray-900 dark:text-darkText">
+                {user.firstName} {user.lastName}
+              </span>{' '}
+              - {user.email}
             </div>
             <div>
               <Link to={`/edit-user/${user.id}`}>
@@ -104,11 +108,7 @@ const ViewUsersPage: React.FC = () => {
         onNext={() => setPage((prev) => (prev < totalPages ? prev + 1 : prev))}
         label={t('users.page')}
       />
-      <DeleteConfirmationModal 
-        isOpen={isModalOpen} 
-        onClose={closeModal} 
-        onConfirm={confirmDelete} 
-      />
+      <DeleteConfirmationModal isOpen={isModalOpen} onClose={closeModal} onConfirm={confirmDelete} />
     </div>
   );
 };

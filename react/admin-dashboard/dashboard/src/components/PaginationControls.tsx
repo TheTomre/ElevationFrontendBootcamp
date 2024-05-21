@@ -19,7 +19,7 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({ page, totalPage
         {label} {page - 1}
       </button>
       <div className="text-gray-700 dark:text-darkText">
-        {label} {page} of {totalPages}
+        {label} {page} of {Math.ceil(totalPages)}
       </div>
       <button
         onClick={onNext}

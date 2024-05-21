@@ -2,14 +2,17 @@ import type { CreateUser, User } from '../types/User';
 import { encryptStr } from '../utils/encryptStr';
 import makeUUID from '../utils/makeUUID';
 import parseDate from '../utils/parseDate';
+import usersData from '../mocks/jsons/users.json';
 // MOCK METHODS
+
 
 let USERS: User[] = [];
 
 
 
-export const initializeUsers = (initialUsers: User[]) => {
-  USERS = initialUsers;
+export const initializeUsers = async () => {
+  USERS = usersData;
+  return USERS;
 };
 
 // create a user

@@ -1,24 +1,37 @@
-import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
+import React, { useEffect, useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { setAdmin } from '../store/slices/auth';
+import { useAppDispatch, useAppSelector } from '../store';
+import { login } from '../service/auth';
 
 const LoginForm: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { login } = useAuth();
+
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/view-users');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const success = await login(username, password);
-    if (success) {
-      navigate('/view-users'); 
-    } else {
+    const admin = await login(username, password);
+    if (!admin?.id) {
       setError(t('login.error'));
+      return;
     }
+
+    dispatch(setAdmin(admin));
   };
 
   return (
