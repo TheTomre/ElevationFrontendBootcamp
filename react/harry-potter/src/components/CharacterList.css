@@ -1,0 +1,10 @@
+/* src/index.css or src/CharacterList.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+Custom styles for character card hover effect
+.character-card:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s;
+}
